@@ -1,14 +1,41 @@
-import { useState } from 'react'
+import { createStore } from './redux'
 
+const value = document.getElementById('value')
+const add = document.getElementById('add')
+const minus = document.getElementById('minus')
 
-function App() {
-  const [count, setCount] = useState(0)
+const ADD = 'ADD'
+const MINUS = 'MINUS'
 
-  return (
-    <div className="App">
-      
-    </div>
-  )
+let initialState = {
+  number: 0
 }
 
-export default App
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case ADD:
+      return { ...state, number: state.number + 1 }
+    case MINUS:
+      return { ...state, number: state.number - 1 }
+    default:
+      return state
+  }
+}
+
+
+const store = createStore(reducer)
+
+function render() {
+  value.innerHTML = store.getState().number
+}
+
+store.subscribe(render)
+
+
+add.addEventListener('click', () => {
+  store.dispatch({ type: ADD })
+})
+
+minus.addEventListener('click', () => {
+  store.dispatch({ type: MINUS })
+})

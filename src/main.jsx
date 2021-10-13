@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './App'
+import Counter1 from './Components/Counter1'
 // import App from './App'
 
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// )
+ReactDOM.render(
+  <React.StrictMode>
+    <Counter1 />
+  </React.StrictMode>,
+  document.getElementById('root')
+)

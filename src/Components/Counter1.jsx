@@ -1,31 +1,8 @@
 import React, { Component } from "react";
-import { createStore, bindActionCreators } from "../redux";
-
-const ADD = "ADD";
-const MINUS = "MINUS";
-const reducer = (state = initState, action) => {
-  switch (action.type) {
-    case ADD:
-      return { number: state.number + action.payload };
-    case MINUS:
-      return { number: state.number - 1 };
-    default:
-      return state;
-  }
-};
-let initState = { number: 0 };
-const store = createStore(reducer, initState);
-
-function addAction(payload = 1) {
-  return { type: "ADD", payload }
-}
-
-function minusAction() {
-  return { type: "MINUS" }
-}
-
-const bindActions = bindActionCreators({ addAction, minusAction }, store.dispatch)
-
+import { bindActionCreators } from "../redux";
+import actions from "../store/actions/counter1.action";
+import store from "../store";
+const boundActions = bindActionCreators(actions, store.dispatch);
 export default class Counter extends Component {
   unsubscribe;
   constructor(props) {
@@ -34,22 +11,22 @@ export default class Counter extends Component {
   }
   componentDidMount() {
     this.unsubscribe = store.subscribe(() =>
-      this.setState({ number: store.getState().number })
+      this.setState({ number: store.getState().counter1.number })
     );
   }
   componentWillUnmount() {
-    unsubscribe && this.unsubscribe();
+    this.unsubscribe && this.unsubscribe();
   }
   render() {
     return (
       <div>
         <p>{this.state.number}</p>
-        <button onClick={() => bindActions.addAction(5)}>+</button>
-        <button onClick={bindActions.minusAction}>-</button>
+        <button onClick={boundActions.add1}>+</button>
+        <button onClick={boundActions.minus1}>-</button>
         <button
           onClick={() => {
             setTimeout(() => {
-              bindActions.addAction()
+              boundActions.add1();
             }, 1000);
           }}
         >

@@ -26,6 +26,8 @@ function createStore(reducer, preloadState) {
     };
   }
 
+  dispatch({ type: "@@/REDUX_INIT" });
+
   return {
     getState,
     dispatch,

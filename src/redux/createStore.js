@@ -4,7 +4,10 @@
  * @param {*} preloadState 预加载状态
  * @returns
  */
-function createStore(reducer, preloadState) {
+function createStore(reducer, preloadState, enhancer) {
+  if (typeof enhancer !== "undefined") {
+    return enhancer(createStore)(reducer, preloadedState);
+  }
   let state = preloadState;
   let listeners = [];
 
